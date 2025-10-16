@@ -12,7 +12,7 @@
  * @package           Formello
  *
  * @wordpress-plugin
- * Plugin Name:       Formello
+ * Plugin Name:       Formarity
  * Plugin URI:        https://formello.net
  * Description:       Lightweight Gutenberg contact form builder, blazingly fast with no external dependencies and ReCaptcha support.
  * Version:           2.7.0

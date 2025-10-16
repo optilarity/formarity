@@ -24,10 +24,25 @@ class Email extends Action {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label    = __( 'Send Email', 'formello' );
+		$this->label    = 'Send Email';
 		$this->settings = $this->get_default_settings();
 
 		add_action( 'wp_mail_failed', array( $this, 'onMailError' ), 10, 1 );
+	}
+
+	/**
+	 * Register the action and translate labels lazily at runtime.
+	 *
+	 * @param array $actions Array of actions.
+	 * @return array
+	 */
+	public function register( array $actions ) {
+		$actions[ $this->type ] = array(
+			'label'    => __( 'Send Email', 'formello' ),
+			'type'     => $this->type,
+			'settings' => $this->settings,
+		);
+		return $actions;
 	}
 
 	/**
@@ -61,7 +76,7 @@ class Email extends Action {
 	 * Processes this action
 	 *
 	 * @param array         $action_settings Te action settings.
-	 * @param Formello\Form $form The form object.
+	 * @param \Formello\Processor\Form $form The form object.
 	 */
 	public function process( $action_settings, $form ) {
 		$settings = array_merge( $this->settings, $action_settings );
