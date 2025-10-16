@@ -49,11 +49,15 @@ class Replacer {
 	 * @param string $template The template variable.
 	 */
 	public function parse( $template ) {
+		if ( null === $template ) {
+			return '';
+		}
+		// Ensure subject is string to avoid deprecation notices.
+		$subject = (string) $template;
+
 		$pattern = '/\{\{ *(\w+)(?:\.([\w-]+))? *(?:\|\| *(\w+))? *\}\}/i';
 
-		$result = preg_replace_callback( $pattern, array( $this, 'get_data' ), $template );
-
-		return $result;
+		return preg_replace_callback( $pattern, array( $this, 'get_data' ), $subject );
 	}
 
 	/**
@@ -62,15 +66,13 @@ class Replacer {
 	 * @param string $matches The matches array.
 	 */
 	protected function get_data( $matches ) {
-
+		$result = '';
 		if ( $matches ) {
-			$tag     = $matches[1];
-			$param   = ! isset( $matches[2] ) ? '' : $matches[2];
+			$tag   = $matches[1];
+			$param = ! isset( $matches[2] ) ? '' : $matches[2];
 			$value = ! isset( $matches[3] ) ? '' : $matches[3];
-
 			$result = $this->replace( $tag, $param, $value );
 		}
-
 		return $result;
 	}
 
