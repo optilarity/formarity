@@ -97,12 +97,11 @@ export function TemplatesModal( { clientId, blockName, onRequestClose } ) {
 			const { getBlockRootClientId, getPatternsByBlockTypes } =
 				select( blockEditorStore );
 			const rootClientId = getBlockRootClientId( clientId );
-			return getPatternsByBlockTypes( blockName, rootClientId );
-		},
-		[ clientId, blockName ]
-	);
-	console.log( blockName );
-	const { replaceBlock } = useDispatch( blockEditorStore );
+		return getPatternsByBlockTypes( blockName, rootClientId );
+	},
+	[ clientId, blockName ]
+);
+const { replaceBlock } = useDispatch( blockEditorStore );
 	const onBlockPatternSelect = ( pattern ) => {
 		if ( pattern.isPro ) {
 			setShowConfirmDialog( true );
@@ -165,11 +164,11 @@ export function TemplatesModal( { clientId, blockName, onRequestClose } ) {
 					<BlockContextProvider
 						value={ { postType: 'formello_form' } }
 					>
-						<ConfirmDialog
-							isOpen={ showConfirmDialog }
-							onConfirm={ () => console.log( 'CONFIRM' ) }
-							onCancel={ () => setShowConfirmDialog( false ) }
-						>
+					<ConfirmDialog
+						isOpen={ showConfirmDialog }
+						onConfirm={ () => setShowConfirmDialog( false ) }
+						onCancel={ () => setShowConfirmDialog( false ) }
+					>
 							CIAO STRONZO
 						</ConfirmDialog>
 

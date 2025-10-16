@@ -143,6 +143,71 @@ const v1 = {
 	},
 };
 
-const deprecated = [ v2, v1 ];
+// v3 - with svg icon and wrapper
+const v3 = {
+	save( { attributes } ) {
+		const { text, alignment, type, noWrapper } = attributes;
+
+		const icons = {
+			Loading,
+			Loading2,
+			Pulse,
+			Loading4,
+			LoadingCircles,
+			LoadingCirclePath,
+			Audio,
+			BallTriangle,
+			Bars,
+			Circles,
+			Grid,
+			ThreeDots,
+		};
+
+		const ButtonIcon = icons[ type ];
+
+		const borderProps = getBorderClassesAndStyles( attributes );
+		const colorProps = getColorClassesAndStyles( attributes );
+
+		const buttonClasses = classnames(
+			'wp-element-button',
+			borderProps.className,
+			colorProps.className
+		);
+
+		if ( noWrapper ) {
+			return (
+				<button
+					type="submit"
+					{ ...useBlockProps.save( {
+						className: buttonClasses,
+						style: colorProps.style,
+					} ) }
+				>
+					<RichText.Content tagName="span" value={ text } />
+					<ButtonIcon />
+				</button>
+			);
+		}
+
+		return (
+			<div
+				{ ...useBlockProps.save( {
+					className: alignment,
+				} ) }
+			>
+				<button
+					type="submit"
+					className={ buttonClasses }
+					style={ colorProps.style }
+				>
+					<RichText.Content tagName="span" value={ text } />
+					<ButtonIcon />
+				</button>
+			</div>
+		);
+	},
+};
+
+const deprecated = [ v3, v2, v1 ];
 
 export default deprecated;

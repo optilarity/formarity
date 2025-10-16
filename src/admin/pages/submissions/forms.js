@@ -224,12 +224,11 @@ export const Forms = () => {
 				label: __( 'Actions' ),
 				id: 'actions',
 				render: ( { item } ) => {
-					return (
-						<HStack
-							expanded={ false }
-							spacing="2"
-							onClick={ () => console.log( 123 ) }
-						>
+				return (
+					<HStack
+						expanded={ false }
+						spacing="2"
+					>
 							{ item.meta._formello_settings.storeSubmissions && (
 								<Icon icon={ icons.Database } width={ 18 } />
 							) }
