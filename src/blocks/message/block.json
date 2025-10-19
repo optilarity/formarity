@@ -11,6 +11,14 @@
 	"attributes": {
 		"text": {
 			"type": "string"
+		},
+		"messageType": {
+			"type": "string",
+			"default": "success"
+		},
+		"displayType": {
+			"type": "string",
+			"default": "notice"
 		}
 	},
 	"supports": {

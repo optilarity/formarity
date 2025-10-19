@@ -9,18 +9,117 @@
 		margin: 0;
 	}
 
-	&.success {
-		display: block;
-		background-color: #dff0d8;
-		border: 1px solid #d0e9c6;
-		color: #3c763d;
+	// Notice styles
+	&.notice {
+		&.success {
+			display: block;
+			background-color: #dff0d8;
+			border: 1px solid #d0e9c6;
+			color: #3c763d;
+		}
+
+		&.error:has(p:not(:empty)) {
+			display: block;
+			background-color: #fcf8e3;
+			border: 1px solid #faf2cc;
+			color: #8a6d3b;
+		}
+
+		&.warning {
+			display: block;
+			background-color: #fff3cd;
+			border: 1px solid #ffeaa7;
+			color: #856404;
+		}
+
+		&.info {
+			display: block;
+			background-color: #d1ecf1;
+			border: 1px solid #bee5eb;
+			color: #0c5460;
+		}
 	}
 
-	&.error:has(p:not(:empty)) {
-		display: block;
-		background-color: #fcf8e3;
-		border: 1px solid #faf2cc;
-		color: #8a6d3b;
+	// Modal styles
+	&.modal {
+		.modal-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 9999;
+		}
+
+		.modal-content {
+			background: white;
+			border-radius: 8px;
+			padding: 2rem;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+			position: relative;
+			min-width: 300px;
+			max-width: 500px;
+			text-align: center;
+		}
+
+		.modal-close {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			background: none;
+			border: none;
+			font-size: 1.5rem;
+			cursor: pointer;
+			color: #999;
+		}
+
+		.modal-icon {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto 1rem;
+			font-size: 2rem;
+			color: white;
+		}
+
+		&.success .modal-icon {
+			background-color: #28a745;
+		}
+
+		&.error .modal-icon {
+			background-color: #dc3545;
+		}
+
+		&.warning .modal-icon {
+			background-color: #ffc107;
+			color: #000;
+		}
+
+		&.info .modal-icon {
+			background-color: #17a2b8;
+		}
+
+		.modal-ok {
+			background-color: #007cba;
+			color: white;
+			border: none;
+			padding: 0.5rem 2rem;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-top: 1rem;
+		}
+
+		ul {
+			text-align: left;
+			margin: 1rem 0;
+		}
 	}
 
 	ul:not(:has(li)) {
