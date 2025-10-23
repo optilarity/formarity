@@ -176,7 +176,7 @@ function recursive_sanitize_text_field( $my_array ) {
  * @return mixed $allowed_blocks Returns the allowed blocks.
  * */
 function formello_allowed_blocks( $allowed_blocks, $editor_context ) {
-	if ( ! $editor_context->post ) {
+	if ( !is_object($editor_context) || ! $editor_context->post ) {
 		return $allowed_blocks;
 	}
 
