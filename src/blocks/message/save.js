@@ -2,7 +2,7 @@ import { InnerBlocks, useBlockProps, RichText } from '@wordpress/block-editor';
 
 export default function save( { attributes } ) {
 	const blockProps = useBlockProps.save( {
-		className: `${attributes.messageType} ${attributes.displayType}`,
+		className: `wp-block-formello-message ${attributes.messageType || 'success'} ${attributes.displayType || 'notice'}`,
 	} );
 
 	if ( attributes.displayType === 'modal' ) {
@@ -36,9 +36,9 @@ export default function save( { attributes } ) {
 								<li data-wp-text="context.item"></li>
 							</template>
 						</ul>
-						<button className="modal-ok" data-wp-on--click="actions.closeModal">
-							{ __( 'OK', 'formello' ) }
-						</button>
+					<button className="modal-ok" data-wp-on--click="actions.closeModal">
+						OK
+					</button>
 					</div>
 				</div>
 				<InnerBlocks.Content />

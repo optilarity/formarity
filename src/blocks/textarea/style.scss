@@ -1,6 +1,8 @@
 .wp-block-formello-textarea {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+    box-sizing: border-box;
     label {
 		&.hide {
 			display: none;
@@ -14,5 +16,7 @@
 	}
     textarea {
         min-height: 150px;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 }

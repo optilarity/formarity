@@ -1,6 +1,13 @@
 .wp-block-formello-select {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    select {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
 
     label span.required {
         color: red;

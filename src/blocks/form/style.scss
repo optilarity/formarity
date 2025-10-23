@@ -7,6 +7,8 @@ $small-margin: 0 8px;
 	flex-direction: row;
 	flex-wrap: wrap;
 	gap: 1em;
+	max-width: 100%;
+	box-sizing: border-box;
 
 	.wp-block-group {
 		align-items: baseline;
@@ -20,12 +22,21 @@ $small-margin: 0 8px;
 	>.wp-block-formello-button,
 	>.wp-block-formello-multichoices {
 		flex-basis: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
 
 		.wp-block-formello-button,
 		.wp-block-formello-output {
 			flex: 0 1;
 			align-self: stretch;
 		}
+	}
+
+	input,
+	select,
+	textarea {
+		max-width: 100%;
+		box-sizing: border-box;
 	}
 
 	&.is-style-modern {
