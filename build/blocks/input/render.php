@@ -25,7 +25,7 @@ if ( $p->next_tag( array( 'tag_name' => 'div' ) ) ) {
 }
 
 if ( $p->next_tag( 'label' ) ) {
-	if ( ! empty( $attributes['hideLabel'] ) ) {
+	if ( ! empty( $attributes['hideLabel'] ) && method_exists( $p, 'remove_tag' ) ) {
 		$p->remove_tag();
 	} else {
 		$p->set_attribute( 'for', $unique_id );
