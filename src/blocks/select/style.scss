@@ -9,9 +9,13 @@
         box-sizing: border-box;
     }
 
-    label span.required {
-        color: red;
-        margin: 0 5px;
-        font-weight: normal;
+    label {
+        margin-bottom: 8px;
+
+        span.required {
+            color: red;
+            margin: 0 5px;
+            font-weight: normal;
+        }
     }
 }
