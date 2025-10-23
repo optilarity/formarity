@@ -41,6 +41,7 @@ export default function Options( props ) {
 		multiple,
 		checked,
 		showHelp,
+		hideLabel,
 		advanced,
 	} = attributes;
 
@@ -128,15 +129,26 @@ export default function Options( props ) {
 					/>
 				) }
 				{ ! ( 'hidden' === type ) && (
-					<ToggleControl
-						label={ __( 'Show help message', 'formello' ) }
-						checked={ showHelp }
-						onChange={ ( newval ) =>
-							setAttributes( { showHelp: newval } )
-						}
-						__nextHasNoMarginBottom
-						__next40pxDefaultSize
-					/>
+					<>
+						<ToggleControl
+							label={ __( 'Hide label', 'formello' ) }
+							checked={ hideLabel }
+							onChange={ ( newval ) =>
+								setAttributes( { hideLabel: newval } )
+							}
+							__nextHasNoMarginBottom
+							__next40pxDefaultSize
+						/>
+						<ToggleControl
+							label={ __( 'Show help message', 'formello' ) }
+							checked={ showHelp }
+							onChange={ ( newval ) =>
+								setAttributes( { showHelp: newval } )
+							}
+							__nextHasNoMarginBottom
+							__next40pxDefaultSize
+						/>
+					</>
 				) }
 				{ ( 'select' === fieldType ||
 					'textarea' === fieldType ||

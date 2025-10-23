@@ -24,6 +24,10 @@
     "required": {
       "type": "boolean"
     },
+    "hideLabel": {
+      "type": "boolean",
+      "default": false
+    },
     "options": {
       "type": "array",
       "source": "query",
