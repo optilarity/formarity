@@ -1,7 +1,7 @@
 import { useBlockProps } from '@wordpress/block-editor';
 
 export default function save( { attributes, className } ) {
-	const { name, options, type, required } = attributes;
+	const { name, options, type, required, hideLabel } = attributes;
 	const blockProps = useBlockProps.save( {
 		className,
 	} );
@@ -12,7 +12,7 @@ export default function save( { attributes, className } ) {
 				const id = name + '-' + index;
 				return (
 					<div key={ index } className={ 'wp-block-formello-input' }>
-						<label htmlFor={ id }>{ opt.label }</label>
+						{ ! hideLabel && <label htmlFor={ id }>{ opt.label }</label> }
 						<input
 							value={ opt.value || opt.label }
 							name={ 'checkbox' === type ? name + '[]' : name }

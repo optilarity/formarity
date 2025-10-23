@@ -25,7 +25,11 @@ if ( $p->next_tag( array( 'tag_name' => 'div' ) ) ) {
 }
 
 if ( $p->next_tag( 'label' ) ) {
-	$p->set_attribute( 'for', $unique_id );
+	if ( ! empty( $attributes['hideLabel'] ) ) {
+		$p->remove_tag();
+	} else {
+		$p->set_attribute( 'for', $unique_id );
+	}
 }
 
 if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {

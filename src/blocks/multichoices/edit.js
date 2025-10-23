@@ -21,7 +21,7 @@ import clsx from 'clsx';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
-	const { name, required, options, type } = attributes;
+	const { name, required, hideLabel, options, type } = attributes;
 	const [ isModalOpen, setIsModalOpen ] = useState( false );
 
 	const containerClass = clsx( {
@@ -76,6 +76,14 @@ export default function Edit( props ) {
 						}
 						__nextHasNoMarginBottom
 					/>
+					<ToggleControl
+						label={ __( 'Hide label', 'formello' ) }
+						checked={ hideLabel }
+						onChange={ ( newval ) =>
+							setAttributes( { hideLabel: newval } )
+						}
+						__nextHasNoMarginBottom
+					/>
 					<Button
 						variant={ 'primary' }
 						onClick={ () => {
@@ -98,7 +106,7 @@ export default function Edit( props ) {
 				const id = name + '-' + index;
 				return (
 					<div key={ index } className={ 'wp-block-formello-input' }>
-						<label htmlFor={ id }>{ opt.label }</label>
+						{ ! hideLabel && <label htmlFor={ id }>{ opt.label }</label> }
 						<input
 							value={ opt.value || opt.label }
 							name={ name }
