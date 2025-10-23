@@ -10,7 +10,6 @@ import { Submissions } from './pages/submissions/submissions';
 import { Submission } from './pages/submission';
 import Settings from './pages/settings';
 import Tools from './pages/tools';
-import Addons from './pages/addons';
 import { getQueryArg } from '@wordpress/url';
 import SettingsContextProvider from './context/settings-context';
 import { RouterProvider, useLocation, useHistory } from './router';
@@ -27,12 +26,6 @@ dispatch( 'core' ).addEntities( [
 		name: 'submissions',
 		baseURL: '/formello/v1/submissions',
 		supportsPagination: true,
-	},
-	{
-		label: __( 'Formello addons', 'formello' ),
-		kind: 'formello/v1',
-		name: 'addons',
-		baseURL: '/formello/v1/addons',
 	},
 	{
 		label: __( 'Formello columns', 'formello' ),
@@ -89,9 +82,6 @@ const Router = () => {
 	}
 	if ( 'formello-tools' === params.page ) {
 		return <Tools />;
-	}
-	if ( 'formello-addons' === params.page ) {
-		return <Addons />;
 	}
 	if (
 		'formello' === params.page &&

@@ -66,7 +66,6 @@ function formello_default_options() {
 			'secret_key' => '',
 			'threshold'  => 0.5,
 		),
-		'enabled_addons' => array(),
 	);
 	return $defaults;
 }
@@ -284,7 +283,7 @@ function add_submissions_count() {
 				'SELECT
 					form_id,
 					count(*) AS total,
-					SUM( is_new = 1 ) AS news 
+					SUM( is_new = 1 ) AS news
 				FROM %i
 				GROUP BY form_id',
 				array( "{$wpdb->prefix}formello_submissions" )

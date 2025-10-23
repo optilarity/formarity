@@ -3,33 +3,18 @@ import {
 	CardHeader,
 	CardBody,
 	withFilters,
-	Button,
 } from '@wordpress/components';
-import { Fragment, createInterpolateElement } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useHistory } from '../../../router';
 import {
 	integrations,
 	icons,
 } from '../../../../form-settings/actions/constants';
 
 const Integrations = withFilters( 'formello.settings.integrations' )( () => {
-	const history = useHistory();
-	const noticeString = ( text ) =>
-		createInterpolateElement( text, {
-			a: (
-				<Button
-					text={ __( 'addons page', 'search-console' ) }
-					onClick={ () => {
-						history.push( { page: 'formello-addons' } );
-					} }
-					variant="link"
-				/>
-			),
-		} );
 	return (
 		<Card>
 			<CardHeader>
@@ -38,12 +23,7 @@ const Integrations = withFilters( 'formello.settings.integrations' )( () => {
 
 			<CardBody>
 				<p>
-					{ noticeString(
-						__(
-							'Go to <a /> to enable your preferred integrations.',
-							'formello'
-						)
-					) }
+					{ __( 'Configure your integrations below.', 'formello' ) }
 				</p>
 			</CardBody>
 		</Card>

@@ -171,8 +171,6 @@ class Plugin {
 		$this->loader->add_action( 'wp_ajax_nopriv_formello', $frontend, 'listen_for_submit' );
 
 		// REST handlers.
-		$addons = new Rest\Addons( $this->entry_point );
-		$this->loader->add_action( 'rest_api_init', $addons, 'register_routes' );
 		$submissions = new Rest\Submissions( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $submissions, 'register_routes' );
 		$columns = new Rest\Columns( $this->entry_point );

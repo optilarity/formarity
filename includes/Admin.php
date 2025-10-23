@@ -95,15 +95,6 @@ class Admin {
 			array( $this, 'settings_page' )
 		);
 		add_action( 'load-' . $admin_hook, array( $this, 'load_formello_scripts' ) );
-		$admin_hook = add_submenu_page(
-			'formello',
-			__( 'Addons', 'formello' ),
-			__( 'Addons', 'formello' ),
-			$capability,
-			$slug . '-addons',
-			array( $this, 'settings_page' )
-		);
-		add_action( 'load-' . $admin_hook, array( $this, 'load_formello_scripts' ) );
 	}
 
 	/**

@@ -10,8 +10,7 @@ $mobile: 426px;
 	background: #f1f1f1;
 }
 
-/* Hide WP notices on the settings and addons page */
-.formello_form_page_formello-addons,
+/* Hide WP notices on the settings page */
 .formello_form_page_formello-settings,
 .toplevel_page_formello-settings {
 	.notice {
@@ -47,11 +46,11 @@ $mobile: 426px;
 
 	.components-badge {
 	    align-items: center;
-	    background-color: 
+	    background-color:
 		color-mix(in srgb, #fff 90%, var(--base-color));
 	    border-radius: 2px;
 	    box-sizing: border-box;
-	    color: 
+	    color:
 		color-mix(in srgb, #000 50%, var(--base-color));
 	    display: inline-flex;
 	    font-size: 12px;
@@ -409,7 +408,7 @@ $mobile: 426px;
 	}
 
 	table tr:not(:last-child) {
-		border-bottom: 1px solid #ddd;		
+		border-bottom: 1px solid #ddd;
 	}
 
 }

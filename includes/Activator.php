@@ -118,8 +118,7 @@ class Activator {
 		// Add a white index.
 		$wp_filesystem->put_contents( trailingslashit( $formello_dir ) . 'index.html', '', 0644 );
 
-		// refresh all addons.
-		delete_transient( 'formello_addons' );
+		// refresh patterns.
 		delete_transient( 'formello_patterns' );
 
 		// remove useless meta.
