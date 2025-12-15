@@ -24,7 +24,8 @@
     "formello/output",
     "formello/fieldset",
     "formello/select",
-    "formello/multichoices"
+    "formello/multichoices",
+    "formello/dynamic-data"
   ],
   "providesContext": {
     "formello/requiredText": "requiredText"

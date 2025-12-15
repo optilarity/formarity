@@ -21,10 +21,9 @@ $p = new \WP_HTML_Tag_Processor( $content );
 $unique_id = wp_unique_id( 'field-' );
 
 if ( $p->next_tag( 'label' ) ) {
-	if ( ! empty( $attributes['hideLabel'] ) && method_exists( $p, 'remove_tag' ) ) {
-		$p->remove_tag();
-	} else {
-		$p->set_attribute( 'for', $unique_id );
+	$p->set_attribute( 'for', $unique_id );
+	if ( ! empty( $attributes['hideLabel'] ) ) {
+		$p->set_attribute( 'style', 'display:none' );
 	}
 }
 

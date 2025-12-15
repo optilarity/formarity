@@ -340,6 +340,43 @@ const { state } = store( 'formello', {
 						},
 					} );
 				} );
+			
+			// Listen for dynamic data updates
+			document.addEventListener( 'formello:update', ( e ) => {
+				const { formId, data } = e.detail;
+				if ( ! data ) return;
+
+				const forms = document.querySelectorAll( 'form.wp-block-formello-form' );
+				forms.forEach( ( form ) => {
+					if ( formId && form.dataset.id !== formId ) return;
+
+					Object.entries( data ).forEach( ( [ key, value ] ) => {
+						// Update inputs
+						const inputs = form.querySelectorAll( `[name="${ key }"], [name="${ key }[]"]` );
+						inputs.forEach( ( input ) => {
+							if ( input.type === 'radio' || input.type === 'checkbox' ) {
+								if ( Array.isArray( value ) ) {
+									input.checked = value.includes( input.value );
+								} else {
+									input.checked = input.value == value;
+								}
+							} else {
+								input.value = value;
+							}
+						});
+
+						// Update bound elements (text/images)
+						const boundElements = form.querySelectorAll( `[data-formello-bind="${ key }"], .formello-bind-${ key }` );
+						boundElements.forEach( ( el ) => {
+							if ( el.tagName === 'IMG' ) {
+								el.src = value;
+							} else {
+								el.textContent = value;
+							}
+						});
+					});
+				});
+			});
 		},
 	},
 } );
