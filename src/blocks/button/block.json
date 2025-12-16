@@ -40,11 +40,18 @@
 			}
 		}
 	},
-    "selectors": {
+	"selectors": {
         "root": ".wp-block-formello-button",
         "color": {
             "background": ".wp-block-formello-button > button",
             "text": ".wp-block-formello-button > button"
+        },
+        "spacing": {
+            "root": ".wp-block-formello-button",
+            "padding": ".wp-block-formello-button > button"
+        },
+        "border": {
+            "root": ".wp-block-formello-button > button"
         },
         "typography": {
             "root": ".wp-block-formello-button > button",
@@ -81,7 +88,7 @@
 	        "textTransform": true,
 	        "textDecoration": true,
 	        "__experimentalFontStyle": true,
-	        "__experimentalSkipSerialization": true
+	        "__experimentalSkipSerialization": false
 	    }
 	},
 	"example": {

@@ -3,6 +3,9 @@
     flex-direction: row;
     align-items: center;
     flex: 1;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 
     &[hidden] {
         display: none;
@@ -11,6 +14,9 @@
     button {
         display: flex;
         align-items: center;
+        border-radius: inherit;
+        border: inherit;
+        font-weight: inherit;
     }
 
     button[hidden] {

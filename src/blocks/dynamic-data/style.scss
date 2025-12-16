@@ -1,4 +1,7 @@
 .formello-dynamic-data {
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
 	/* Basic styling for dynamic data block */
 	&.type-image {
 		display: inline-block;
