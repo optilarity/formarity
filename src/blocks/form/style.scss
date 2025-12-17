@@ -10,6 +10,10 @@ $small-margin: 0 8px;
 	max-width: 100%;
 	box-sizing: border-box;
 
+	.wp-block-columns {
+		width: 100%;
+	}
+
 	.wp-block-group {
 		align-items: baseline;
 	}
