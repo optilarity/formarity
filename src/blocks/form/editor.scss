@@ -10,6 +10,12 @@ body.post-type-formello_form {
 
 .wp-block-formello-form {
 
+	input,
+	select,
+	textarea {
+		line-height: normal;
+	}
+
 	.wp-block-formello-input, .wp-block-formello-select, .wp-block-formello-textarea, .wp-block-formello-multichoices {
 		&.missing-name::before {
 			content: 'Missing field name';
