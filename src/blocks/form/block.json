@@ -25,7 +25,9 @@
 		"formello/fieldset",
 		"formello/select",
 		"formello/multichoices",
-		"formello/dynamic-data"
+		"formello/dynamic-data",
+		"jankx/icon-picker",
+		"jankx/svg-icon"
 	],
 	"providesContext": {
 		"formello/requiredText": "requiredText"
