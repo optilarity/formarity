@@ -17,7 +17,8 @@ import {
 	ToolbarGroup,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { createBlock } from '@wordpress/blocks';
 import clsx from 'clsx';
 import {
 	Loading,
@@ -108,6 +109,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		},
 		[ clientId ]
 	);
+	const { insertBlocks, replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 
 	return (
 		<div { ...blockProps }>
@@ -133,6 +135,30 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 										};
 									}
 								) }
+							/>
+						</ToolbarGroup>
+						<ToolbarGroup>
+							<ToolbarDropdownMenu
+								icon={ 'admin-customizer' }
+								label={ __( 'Icon', 'formello' ) }
+								controls={ [
+									{
+										title: __( 'Thêm Icon Picker', 'formello' ),
+										onClick: () => insertBlocks( createBlock( 'jankx/icon-picker' ), undefined, clientId ),
+									},
+									{
+										title: __( 'Thêm SVG Icon', 'formello' ),
+										onClick: () => insertBlocks( createBlock( 'jankx/svg-icon' ), undefined, clientId ),
+									},
+									{
+										title: __( 'Thêm Image', 'formello' ),
+										onClick: () => insertBlocks( createBlock( 'core/image' ), undefined, clientId ),
+									},
+									{
+										title: __( 'Xoá icon', 'formello' ),
+										onClick: () => replaceInnerBlocks( clientId, [] ),
+									},
+								] }
 							/>
 						</ToolbarGroup>
 					</BlockControls>
@@ -174,7 +200,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 						allowedBlocks={ ALLOWED_BLOCKS }
 						template={ [] }
 						templateLock={ false }
-						renderAppender={ hasInnerBlocks ? false : InnerBlocks.ButtonBlockAppender }
+						renderAppender={ false }
 						orientation="horizontal"
 					/>
 				</span>
