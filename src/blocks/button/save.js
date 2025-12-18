@@ -63,7 +63,7 @@ export default function save( { attributes } ) {
 				<span className="button-icon-wrapper">
 					<InnerBlocks.Content />
 				</span>
-				<RichText.Content tagName="span" className="button-text" value={ text } />
+				<RichText.Content tagName="span" className="button-text" value={ text || '' } />
 				{ ButtonIcon ? <ButtonIcon /> : null }
 			</button>
 		);
@@ -83,7 +83,7 @@ export default function save( { attributes } ) {
 				<span className="button-icon-wrapper">
 					<InnerBlocks.Content />
 				</span>
-				<RichText.Content tagName="span" className="button-text" value={ text } />
+				<RichText.Content tagName="span" className="button-text" value={ text || '' } />
 				{ ButtonIcon ? <ButtonIcon /> : null }
 			</button>
 		</div>

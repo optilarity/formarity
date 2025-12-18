@@ -17,7 +17,7 @@
     "text": {
       "type": "string",
       "source": "text",
-      "selector": "span",
+      "selector": ".button-text",
       "default": "Submit"
     },
     "iconPosition": {
