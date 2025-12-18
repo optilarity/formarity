@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import {
 	useBlockProps,
+	InnerBlocks,
 	RichText,
 	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
 	__experimentalGetColorClassesAndStyles as getColorClassesAndStyles,
