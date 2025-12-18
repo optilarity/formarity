@@ -4,6 +4,7 @@ import {
 	useBlockProps,
 	BlockControls,
 	InspectorAdvancedControls,
+	InnerBlocks,
 	RichText,
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
@@ -16,6 +17,7 @@ import {
 	ToolbarGroup,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
 import clsx from 'clsx';
 import {
 	Loading,
@@ -55,8 +57,10 @@ const ALIGNMENT_CONTROLS = [
 	},
 ];
 
-export default function Edit( { attributes, setAttributes } ) {
-	const { type, alignment, noWrapper } = attributes;
+const ALLOWED_BLOCKS = [ 'jankx/icon-picker', 'jankx/svg-icon', 'core/image' ];
+
+export default function Edit( { attributes, setAttributes, clientId } ) {
+	const { type, alignment, noWrapper, iconPosition = 'left' } = attributes;
 
 	const icons = {
 		Loading,
@@ -89,12 +93,21 @@ export default function Edit( { attributes, setAttributes } ) {
 		colorProps.className,
 		{
 			'wp-block-formello-button--loading': showIcon,
+			[ `icon-position-${ iconPosition }` ]: true,
 		}
 	);
 
 	const blockProps = useBlockProps( {
 		className: alignment,
 	} );
+
+	const hasInnerBlocks = useSelect(
+		( select ) => {
+			const { getBlockCount } = select( 'core/block-editor' );
+			return getBlockCount( clientId ) > 0;
+		},
+		[ clientId ]
+	);
 
 	return (
 		<div { ...blockProps }>
@@ -142,9 +155,32 @@ export default function Edit( { attributes, setAttributes } ) {
 							setAttributes( { type: val } );
 						} }
 					/>
+					{ hasInnerBlocks && (
+						<SelectControl
+							label={ __( 'Icon position', 'formello' ) }
+							value={ iconPosition }
+							options={ [
+								{ label: __( 'Left', 'formello' ), value: 'left' },
+								{ label: __( 'Right', 'formello' ), value: 'right' },
+								{ label: __( 'Top', 'formello' ), value: 'top' },
+								{ label: __( 'Bottom', 'formello' ), value: 'bottom' },
+							] }
+							onChange={ ( val ) => setAttributes( { iconPosition: val } ) }
+						/>
+					) }
 				</InspectorAdvancedControls>
+				<span className="button-icon-wrapper">
+					<InnerBlocks
+						allowedBlocks={ ALLOWED_BLOCKS }
+						template={ [] }
+						templateLock={ false }
+						renderAppender={ hasInnerBlocks ? false : InnerBlocks.ButtonBlockAppender }
+						orientation="horizontal"
+					/>
+				</span>
 				<RichText
 					tagName="span"
+					className="button-text"
 					value={ attributes.text }
 					onChange={ ( val ) => setAttributes( { text: val } ) }
 					placeholder={ __( 'Enter button text…', 'formello' ) }

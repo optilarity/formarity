@@ -21,7 +21,7 @@ import {
 } from '../../icons/loading';
 
 export default function save( { attributes } ) {
-	const { text, alignment, type, noWrapper } = attributes;
+	const { text, alignment, type, noWrapper, iconPosition = 'left' } = attributes;
 
 	const icons = {
 		Loading,
@@ -46,7 +46,8 @@ export default function save( { attributes } ) {
 	const buttonClasses = clsx(
 		'wp-element-button',
 		borderProps.className,
-		colorProps.className
+		colorProps.className,
+		`icon-position-${ iconPosition }`
 	);
 
 	if ( noWrapper ) {
@@ -58,7 +59,10 @@ export default function save( { attributes } ) {
 					style: colorProps.style,
 				} ) }
 			>
-				<RichText.Content tagName="span" value={ text } />
+				<span className="button-icon-wrapper">
+					<InnerBlocks.Content />
+				</span>
+				<RichText.Content tagName="span" className="button-text" value={ text } />
 				<ButtonIcon />
 			</button>
 		);
@@ -75,7 +79,10 @@ export default function save( { attributes } ) {
 				className={ buttonClasses }
 				style={ colorProps.style }
 			>
-				<RichText.Content tagName="span" value={ text } />
+				<span className="button-icon-wrapper">
+					<InnerBlocks.Content />
+				</span>
+				<RichText.Content tagName="span" className="button-text" value={ text } />
 				<ButtonIcon />
 			</button>
 		</div>

@@ -20,6 +20,16 @@
       "selector": "span",
       "default": "Submit"
     },
+    "iconPosition": {
+      "type": "string",
+      "enum": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "default": "left"
+    },
     "alignment": {
       "type": "string",
       "default": "left"
