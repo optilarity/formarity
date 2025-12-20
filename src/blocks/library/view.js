@@ -204,12 +204,17 @@ const { state } = store( 'formello', {
 	state: {
 		get message() {
 			const context = getContext();
+			const hasResponse = !!context.response;
+			if ( ! hasResponse ) {
+				return '';
+			}
 			if ( context.response?.data?.errors ) {
 				return context.response?.data?.message;
 			}
-			return context.successMessage.length
-				? context.successMessage
-				: context.response?.data?.message;
+			if ( context.response?.success && context.successMessage.length ) {
+				return context.successMessage;
+			}
+			return context.response?.data?.message || '';
 		},
 		get errors() {
 			const context = getContext();

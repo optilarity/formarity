@@ -169,7 +169,7 @@ class Activator {
 				$updated_content = str_replace(
 					'</form>',
 					'<!-- wp:formello/message -->
-<div class="wp-block-formello-message" data-wp-class--success="context.response.success" data-wp-class--error="!context.response.success" data-wp-interactive="formello" data-wp-context="{}"><p data-wp-text="state.message"></p><ul data-wp-context="state.errors"><template data-wp-each="state.errors"><li data-wp-text="context.item"></li></template></ul></div>
+<div class="wp-block-formello-message" data-wp-class--success="context.response && context.response.success" data-wp-class--error="context.response && !context.response.success" data-wp-interactive="formello" data-wp-context="{}" data-wp-bind--hidden="!context.response"><p data-wp-text="state.message"></p><ul data-wp-context="state.errors"><template data-wp-each="state.errors"><li data-wp-text="context.item"></li></template></ul></div>
 <!-- /wp:formello/message --></form>',
 					$form->post_content
 				);
