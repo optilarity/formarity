@@ -176,15 +176,6 @@ const response = ( ref, res, state ) => {
 		return false;
 	}
 
-	// Ensure message becomes visible when a response exists
-	const msgEl = ref.querySelector( '.wp-block-formello-message' );
-	if ( msgEl ) {
-		try {
-			msgEl.hidden = false;
-			msgEl.style && msgEl.style.removeProperty( 'display' );
-		} catch (e) {}
-	}
-
 	// Should we hide form?
 	if ( data.hide && res.success ) {
 		const msg = ref.querySelector( '.wp-block-formello-message' );
@@ -213,17 +204,12 @@ const { state } = store( 'formello', {
 	state: {
 		get message() {
 			const context = getContext();
-			const hasResponse = !!context.response;
-			if ( ! hasResponse ) {
-				return '';
-			}
 			if ( context.response?.data?.errors ) {
 				return context.response?.data?.message;
 			}
-			if ( context.response?.success && context.successMessage.length ) {
-				return context.successMessage;
-			}
-			return context.response?.data?.message || '';
+			return context.response && context.successMessage.length
+				? context.successMessage
+				: context.response?.data?.message;
 		},
 		get errors() {
 			const context = getContext();
@@ -355,17 +341,6 @@ const { state } = store( 'formello', {
 					} );
 				} );
 			
-			// Hide any pre-rendered message before first response
-			document
-				.querySelectorAll( '.wp-block-formello-message' )
-				.forEach( ( el ) => {
-					// Only force hide when no binding exists
-					if ( ! el.hasAttribute( 'data-wp-bind--hidden' ) ) {
-						el.hidden = true;
-						el.style && el.style.setProperty( 'display', 'none' );
-					}
-				} );
-
 			// Listen for dynamic data updates
 			document.addEventListener( 'formello:update', ( e ) => {
 				const { formId, data } = e.detail;

@@ -28,7 +28,7 @@ export default function save( { attributes } ) {
 						</div>
 						<RichText.Content
 							tagName="p"
-							value=""
+							value={ attributes.text }
 							data-wp-text="state.message"
 						/>
 						<ul data-wp-context="state.errors" data-wp-bind--hidden="context.response.success">
@@ -49,19 +49,18 @@ export default function save( { attributes } ) {
 	return (
 		<div
 			{ ...blockProps }
-			data-wp-class--success="context.response && context.response.success"
-			data-wp-class--error="context.response && !context.response.success"
+			data-wp-class--success="context.response.success"
+			data-wp-class--error="!context.response.success"
 			data-wp-interactive="formello"
 			data-wp-context={ JSON.stringify( {
 				successMessage: attributes.text,
 				messageType: attributes.messageType,
 				displayType: attributes.displayType,
 			} ) }
-			data-wp-bind--hidden="!context.response"
 		>
 			<RichText.Content
 				tagName="p"
-				value=""
+				value={ attributes.text }
 				data-wp-text="state.message"
 			/>
 			<ul data-wp-context="state.errors">
