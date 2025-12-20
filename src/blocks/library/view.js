@@ -207,7 +207,7 @@ const { state } = store( 'formello', {
 			if ( context.response?.data?.errors ) {
 				return context.response?.data?.message;
 			}
-			return context.response && context.successMessage.length
+			return context.successMessage.length
 				? context.successMessage
 				: context.response?.data?.message;
 		},
