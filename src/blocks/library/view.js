@@ -176,6 +176,15 @@ const response = ( ref, res, state ) => {
 		return false;
 	}
 
+	// Ensure message becomes visible when a response exists
+	const msgEl = ref.querySelector( '.wp-block-formello-message' );
+	if ( msgEl ) {
+		try {
+			msgEl.hidden = false;
+			msgEl.style && msgEl.style.removeProperty( 'display' );
+		} catch (e) {}
+	}
+
 	// Should we hide form?
 	if ( data.hide && res.success ) {
 		const msg = ref.querySelector( '.wp-block-formello-message' );
@@ -346,6 +355,17 @@ const { state } = store( 'formello', {
 					} );
 				} );
 			
+			// Hide any pre-rendered message before first response
+			document
+				.querySelectorAll( '.wp-block-formello-message' )
+				.forEach( ( el ) => {
+					// Only force hide when no binding exists
+					if ( ! el.hasAttribute( 'data-wp-bind--hidden' ) ) {
+						el.hidden = true;
+						el.style && el.style.setProperty( 'display', 'none' );
+					}
+				} );
+
 			// Listen for dynamic data updates
 			document.addEventListener( 'formello:update', ( e ) => {
 				const { formId, data } = e.detail;
