@@ -180,17 +180,22 @@ const response = (ref, res, state) => {
 	// Should we hide form?
 	if (data.hide && res.success) {
 		const msg = ref.querySelector('.wp-block-formello-message');
-		if (msg && !msg.classList.contains('modal')) {
-			// Hide all siblings except the message and necessary hidden inputs
-			Array.from(ref.children).forEach((child) => {
-				if (child !== msg && child.type !== 'hidden') {
-					child.style.display = 'none';
-				}
-			});
-			msg.style.display = 'block';
-			msg.scrollIntoView({
-				behavior: 'smooth',
-			});
+		if (msg) {
+			if (msg.classList.contains('modal')) {
+				msg.style.removeProperty('display');
+				msg.style.display = 'block';
+			} else {
+				// Hide all siblings except the message and necessary hidden inputs
+				Array.from(ref.children).forEach((child) => {
+					if (child !== msg && child.type !== 'hidden') {
+						child.style.display = 'none';
+					}
+				});
+				msg.style.display = 'block';
+				msg.scrollIntoView({
+					behavior: 'smooth',
+				});
+			}
 		}
 	}
 
