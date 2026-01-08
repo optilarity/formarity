@@ -18,100 +18,100 @@ const toggleInputError = () => {
 
 	if (
 		'tel' === ref.type &&
-		ref.classList.contains( 'formello-advanced' ) &&
-		! window.intlTelInput.getInstance( ref ).isValidNumber() &&
+		ref.classList.contains('formello-advanced') &&
+		!window.intlTelInput.getInstance(ref).isValidNumber() &&
 		ref.value
 	) {
-		window.intlTelInput.getInstance( ref ).getValidationError();
+		window.intlTelInput.getInstance(ref).getValidationError();
 
-		ref.setCustomValidity( 'Please match the number format.' );
+		ref.setCustomValidity('Please match the number format.');
 		context.error = ref.validationMessage;
 	} else if (
 		'tel' === ref.type &&
-		ref.classList.contains( 'formello-advanced' )
+		ref.classList.contains('formello-advanced')
 	) {
-		const num = window.intlTelInput?.getInstance( ref ).getNumber();
+		const num = window.intlTelInput?.getInstance(ref).getNumber();
 		document
-			.querySelector( 'input[name="' + ref.name + '_full"]' )
-			.setAttribute( 'value', num );
-		ref.setCustomValidity( '' );
+			.querySelector('input[name="' + ref.name + '_full"]')
+			.setAttribute('value', num);
+		ref.setCustomValidity('');
 	} else {
-		ref.setCustomValidity( '' );
+		ref.setCustomValidity('');
 	}
 
 	if (
 		'checkbox' === ref.type &&
-		ref.getAttribute( 'name' ).includes( '[]' )
+		ref.getAttribute('name').includes('[]')
 	) {
 		const checked = ref
-			.closest( '.wp-block-formello-multichoices' )
-			.querySelector( 'input[type=checkbox]:checked' );
+			.closest('.wp-block-formello-multichoices')
+			.querySelector('input[type=checkbox]:checked');
 
 		const unchecked = ref
-			.closest( '.wp-block-formello-multichoices' )
-			.querySelectorAll( 'input[type=checkbox]:not(:checked)' );
+			.closest('.wp-block-formello-multichoices')
+			.querySelectorAll('input[type=checkbox]:not(:checked)');
 
-		if ( checked ) {
-			unchecked.forEach( ( c ) => {
+		if (checked) {
+			unchecked.forEach((c) => {
 				c.required = false;
-			} );
+			});
 		} else {
-			ref.closest( '.wp-block-formello-multichoices' )
-				.querySelectorAll( 'input[type=checkbox]' )
-				.forEach( ( c ) => {
+			ref.closest('.wp-block-formello-multichoices')
+				.querySelectorAll('input[type=checkbox]')
+				.forEach((c) => {
 					c.required = true;
-				} );
+				});
 		}
 	}
 
-	if ( ref.validity.rangeOverflow && 'time' === ref.type ) {
+	if (ref.validity.rangeOverflow && 'time' === ref.type) {
 		context.error = settings.messages.outOfRange.over.replace(
 			'{max}',
-			ref.getAttribute( 'max' ).replace( '{max}', ref.value.max )
+			ref.getAttribute('max').replace('{max}', ref.value.max)
 		);
 	}
 
-	if ( ref.validity.rangeUnderflow && 'time' === ref.type ) {
+	if (ref.validity.rangeUnderflow && 'time' === ref.type) {
 		context.error = settings.messages.outOfRange.under.replace(
 			'{min}',
-			ref.getAttribute( 'min' ).replace( '{min}', ref.value.min )
+			ref.getAttribute('min').replace('{min}', ref.value.min)
 		);
 	}
 
-	if ( ref.validity.tooShort ) {
+	if (ref.validity.tooShort) {
 		context.error = settings.messages.wrongLength.under.replace(
 			'{minLength}',
 			ref
-				.getAttribute( 'minlength' )
-				.replace( '{length}', ref.value.length )
+				.getAttribute('minlength')
+				.replace('{length}', ref.value.length)
 		);
 	}
 
-	if ( ref.validity.tooLong ) {
+	if (ref.validity.tooLong) {
 		context.error = settings.messages.wrongLength.over.replace(
 			'{maxLength}',
 			ref
-				.getAttribute( 'maxlength' )
-				.replace( '{length}', ref.value.length )
+				.getAttribute('maxlength')
+				.replace('{length}', ref.value.length)
 		);
 	}
 
-	if ( ref.validity.typeMismatch || ref.validity.badInput ) {
-		context.error = settings.messages.patternMismatch[ ref.type ];
+	if (ref.validity.typeMismatch || ref.validity.badInput) {
+		context.error = settings.messages.patternMismatch[ref.type];
 	}
 
-	if ( ref.validity.patternMismatch ) {
+	if (ref.validity.patternMismatch) {
 		context.error =
-			settings.messages.patternMismatch[ ref.type ] ??
-			ref.getAttribute( 'data-bouncer-message' ) ??
+			settings.messages.patternMismatch[ref.type] ??
+			ref.getAttribute('data-bouncer-message') ??
 			settings.messages.patternMismatch.default;
 	}
 
-	if ( ref.validity.valueMissing ) {
+	if (ref.validity.valueMissing) {
 		context.error = settings.messages.missingValue.hasOwnProperty(
 			ref.type
 		)
-			? settings.messages.missingValue[ ref.type ]
+			? settings.messages.missingValue[ref.type]
 			: settings.messages.missingValue.default;
 	}
 };
@@ -121,27 +121,28 @@ const formSubmit = async () => {
 	const context = getContext();
 	const config = getConfig();
 	const { id } = ref.dataset;
-	const formData = new FormData( ref );
-	formData.append( 'action', 'formello' );
-	formData.append( '_formello', config.nonce );
-	formData.append( '_formello_id', id );
+	const formData = new FormData(ref);
+	formData.append('action', 'formello');
+	formData.append('_formello', config.nonce);
+	formData.append('_formello_id', id);
 
 	try {
 		context.isLoading = true;
-		const req = await fetch( config.ajax_url, {
+		const req = await fetch(config.ajax_url, {
 			method: 'POST',
 			body: formData,
-		} );
+		});
 
 		const res = await req.json();
 		context.response = res;
+		state.responses[id] = res;
 
 		context.isLoading = false;
 
-		response( ref, res, state );
-	} catch ( err ) {
+		response(ref, res, state);
+	} catch (err) {
 		context.isLoading = false;
-		if ( typeof err === 'string' || err instanceof String ) {
+		if (typeof err === 'string' || err instanceof String) {
 			context.response = { data: { message: err }, success: false };
 		} else {
 			context.response = {
@@ -162,98 +163,111 @@ const captchaChallenge = async () => {
 	) {
 		return window.grecaptcha.execute();
 	}
-	if ( context.captchaEnabled && 'hCaptcha' === context.captchaType ) {
-		await window.hcaptcha.execute( { async: true } );
+	if (context.captchaEnabled && 'hCaptcha' === context.captchaType) {
+		await window.hcaptcha.execute({ async: true });
 	}
 };
 
-const response = ( ref, res, state ) => {
+const response = (ref, res, state) => {
 	const { data } = res;
 
 	// Should we redirect?
-	if ( data.redirect_url && res.success ) {
+	if (data.redirect_url && res.success) {
 		window.location = data.redirect_url;
 		return false;
 	}
 
 	// Should we hide form?
-	if ( data.hide && res.success ) {
-		const msg = ref.querySelector( '.wp-block-formello-message' );
-		ref.insertAdjacentElement( 'beforebegin', msg );
-		setTimeout( () => {
-			ref.style.display = 'none';
-			msg.scrollIntoView( {
+	if (data.hide && res.success) {
+		const msg = ref.querySelector('.wp-block-formello-message');
+		if (msg && !msg.classList.contains('modal')) {
+			// Hide all siblings except the message and necessary hidden inputs
+			Array.from(ref.children).forEach((child) => {
+				if (child !== msg && child.type !== 'hidden') {
+					child.style.display = 'none';
+				}
+			});
+			msg.style.display = 'block';
+			msg.scrollIntoView({
 				behavior: 'smooth',
-			} );
-		}, '300' );
+			});
+		}
 	}
 
-	if ( data.debug ) {
+	if (data.debug) {
 		// eslint-disable-next-line no-console
-		console.info( data.debug );
-		state.debugData = JSON.stringify( res.data.debug, undefined, 2 );
+		console.info(data.debug);
+		state.debugData = JSON.stringify(res.data.debug, undefined, 2);
 	}
 
 	// clear form
-	if ( res.success ) {
+	if (res.success) {
 		ref.reset();
 	}
 };
 
-const { state } = store( 'formello', {
+const { state } = store('formello', {
 	state: {
+		responses: {},
 		get message() {
 			const context = getContext();
-			if ( context.response?.data?.errors ) {
-				return context.response?.data?.message;
+			const response = context.response || state.responses[context.id];
+			if (!response) {
+				return '';
 			}
-			return context.response && context.successMessage.length
+			if (response.data?.errors && response.data.errors.length > 0) {
+				return response.data?.message;
+			}
+			return response.success &&
+				context.successMessage &&
+				context.successMessage.length
 				? context.successMessage
-				: context.response?.data?.message;
+				: response.data?.message;
 		},
 		get errors() {
 			const context = getContext();
-			return context.response?.data?.errors || [];
+			const response = context.response || state.responses[context.id];
+			return response?.data?.errors || [];
 		},
 	},
 	actions: {
-		validateCaptcha: ( e ) => {
+		validateCaptcha: (e) => {
 			const { ref } = getElement();
 			e.preventDefault();
 
-			const isFormValid = ref.closest( 'form' ).checkValidity();
+			const isFormValid = ref.closest('form').checkValidity();
 
-			if ( ! isFormValid ) {
-				ref.closest( 'form' ).requestSubmit( ref );
+			if (!isFormValid) {
+				ref.closest('form').requestSubmit(ref);
 				return false;
 			}
 
 			const context = getContext();
 			context.isLoading = true;
-			captchaChallenge().then( () => {
-				ref.closest( 'form' ).requestSubmit( ref );
-			} );
+			captchaChallenge().then(() => {
+				ref.closest('form').requestSubmit(ref);
+			});
 		},
-		sendForm: ( e ) => {
+		sendForm: (e) => {
 			e.preventDefault();
 			e.stopPropagation();
 
 			const { ref } = getElement();
 			const context = getContext();
 
-			if ( context.enableJsValidation ) {
+			if (context.enableJsValidation) {
 				const isFormValid = ref.checkValidity();
 
-				if ( ! isFormValid ) {
+				if (!isFormValid) {
 					// Set the focus to the first invalid input.
 					const firstInvalidInputEl = ref.querySelector(
 						'input:invalid, select:invalid'
 					);
-					firstInvalidInputEl?.scrollIntoView( {
+					firstInvalidInputEl?.scrollIntoView({
 						behavior: 'smooth',
 						block: 'end',
 						inline: 'nearest',
-					} );
+					});
 					firstInvalidInputEl?.focus();
 
 					return;
@@ -261,29 +275,36 @@ const { state } = store( 'formello', {
 			}
 			context.isLoading = true;
 
-			formSubmit( e );
+			formSubmit(e);
 		},
 		setOutput: () => {
 			const { ref } = getElement();
-			if ( 'OUTPUT' === ref.nextElementSibling?.nodeName ) {
+			if ('OUTPUT' === ref.nextElementSibling?.nodeName) {
 				ref.nextElementSibling.value = ref.value;
 			}
 		},
 		validateInput: () => {
 			const context = getContext();
-			if ( context.enableJsValidation ) {
+			if (context.enableJsValidation) {
 				toggleInputError();
+			}
+		},
+		closeModal: () => {
+			const context = getContext();
+			context.response = null;
+			if (context.id) {
+				state.responses[context.id] = null;
 			}
 		},
 	},
 	callbacks: {
 		showDebug: () => {
 			const { ref } = getElement();
-			if ( state.debugData ) {
-				window.renderjson.set_show_to_level( 2 );
+			if (state.debugData) {
+				window.renderjson.set_show_to_level(2);
 				ref.innerHTML = '';
 				ref.appendChild(
-					window.renderjson( JSON.parse( state.debugData ) )
+					window.renderjson(JSON.parse(state.debugData))
 				);
 			}
 		},
@@ -297,66 +318,66 @@ const { state } = store( 'formello', {
 				...config.settings.messages,
 			};
 
-			window.tinymce?.init( jsConfig.tinyMce );
+			window.tinymce?.init(jsConfig.tinyMce);
 
 			document
-				.querySelectorAll( 'input.formello-advanced[type=text]' )
-				.forEach( ( el ) => {
+				.querySelectorAll('input.formello-advanced[type=text]')
+				.forEach((el) => {
 					const { flatpickr } = el.dataset;
-					window.flatpickr?.( el, JSON.parse( flatpickr ) );
-				} );
+					window.flatpickr?.(el, JSON.parse(flatpickr));
+				});
 
 			document
-				.querySelectorAll( 'input[type="tel"].formello-advanced' )
-				.forEach( ( el ) => {
-					window.intlTelInput?.( el, {
+				.querySelectorAll('input[type="tel"].formello-advanced')
+				.forEach((el) => {
+					window.intlTelInput?.(el, {
 						loadUtilsOnInit:
 							'https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/js/utils.js',
-						hiddenInput( telInputName ) {
+						hiddenInput(telInputName) {
 							return {
 								phone: telInputName + '_full',
 								country: telInputName + '_country_code',
 							};
 						},
 						initialCountry: 'auto',
-						geoIpLookup: ( callback ) => {
-							fetch( 'https://ipapi.co/json' )
-								.then( ( res ) => res.json() )
-								.then( ( data ) =>
-									callback( data.country_code )
+						geoIpLookup: (callback) => {
+							fetch('https://ipapi.co/json')
+								.then((res) => res.json())
+								.then((data) =>
+									callback(data.country_code)
 								)
-								.catch( () => callback( 'us' ) );
+								.catch(() => callback('us'));
 						},
-					} );
-				} );
+					});
+				});
 			document
-				.querySelectorAll( 'select.formello-advanced' )
-				.forEach( ( el ) => {
-					new window.TomSelect( el, {
+				.querySelectorAll('select.formello-advanced')
+				.forEach((el) => {
+					new window.TomSelect(el, {
 						create: true,
 						sortField: {
 							field: 'text',
 							direction: 'asc',
 						},
-					} );
-				} );
-			
+					});
+				});
+
 			// Listen for dynamic data updates
-			document.addEventListener( 'formello:update', ( e ) => {
+			document.addEventListener('formello:update', (e) => {
 				const { formId, data } = e.detail;
-				if ( ! data ) return;
+				if (!data) return;
 
-				const forms = document.querySelectorAll( 'form.wp-block-formello-form' );
-				forms.forEach( ( form ) => {
-					if ( formId && form.dataset.id !== formId ) return;
+				const forms = document.querySelectorAll('form.wp-block-formello-form');
+				forms.forEach((form) => {
+					if (formId && form.dataset.id !== formId) return;
 
-					Object.entries( data ).forEach( ( [ key, value ] ) => {
+					Object.entries(data).forEach(([key, value]) => {
 						// Update inputs
-						const inputs = form.querySelectorAll( `[name="${ key }"], [name="${ key }[]"]` );
-						inputs.forEach( ( input ) => {
-							if ( input.type === 'radio' || input.type === 'checkbox' ) {
-								if ( Array.isArray( value ) ) {
-									input.checked = value.includes( input.value );
+						const inputs = form.querySelectorAll(`[name="${key}"], [name="${key}[]"]`);
+						inputs.forEach((input) => {
+							if (input.type === 'radio' || input.type === 'checkbox') {
+								if (Array.isArray(value)) {
+									input.checked = value.includes(input.value);
 								} else {
 									input.checked = input.value == value;
 								}
@@ -366,9 +387,9 @@ const { state } = store( 'formello', {
 						});
 
 						// Update bound elements (text/images)
-						const boundElements = form.querySelectorAll( `[data-formello-bind="${ key }"], .formello-bind-${ key }` );
-						boundElements.forEach( ( el ) => {
-							if ( el.tagName === 'IMG' ) {
+						const boundElements = form.querySelectorAll(`[data-formello-bind="${key}"], .formello-bind-${key}`);
+						boundElements.forEach((el) => {
+							if (el.tagName === 'IMG') {
 								el.src = value;
 							} else {
 								el.textContent = value;
@@ -379,4 +400,4 @@ const { state } = store( 'formello', {
 			});
 		},
 	},
-} );
+});
